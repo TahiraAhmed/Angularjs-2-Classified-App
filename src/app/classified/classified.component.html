@@ -1,0 +1,67 @@
+ <br>
+	<a>All </a>
+  <br>
+  
+ 
+   <form class="ui large form segment" *ngIf="active" (ngSubmit)="onSubmit()" #adForm="ngForm">
+      <h3 class="ui header">Submit an Ad</h3>
+
+      <div class="field">
+          <label for="title">Title:</label>
+          <input #title="ngModel"  id='title' placeholder="title" [(ngModel)]="ad.title" name="title" required>
+           <div [hidden]="title.valid || title.pristine" >
+            <i>title is required</i>
+        </div>
+      </div>
+
+      <div class="field">
+          <label for="category">Category:</label>
+          <select name="category" #category="ngModel" id='category' required [(ngModel)]="ad.category">
+             <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+          </select>
+          <div [hidden]="category.valid || category.pristine">
+           <i>category is required</i>
+        </div>
+      </div>
+
+      <div class="field">
+          <label for="price">Price:</label>
+          <input #price="ngModel" id='price' placeholder="price" name="price" required [(ngModel)]="ad.price">
+          <div [hidden]="price.valid || price.pristine">
+          <i>price is required</i>
+        </div>
+      </div>
+
+      <div class="field">
+          <label for="color">Color:</label>
+          <input #color="ngModel" id='color' placeholder="color" name="color" required [(ngModel)]="ad.color">
+          <div [hidden]="color.valid || color.pristine">
+          <i>color is required</i>
+        </div>
+      </div>
+
+      <div class="field">
+      <input type="file" id="imageFile" #image [disabled]="image">
+      </div>
+        
+
+      <button type="submit" id="submitBtn" (click)="add(image.value,category.value,title.value,price.value,color.value)"
+      class="ui positive right floated button" [disabled]="!adForm.form.valid">Submit</button>
+
+      <button type="button" (click)="newAd()" class="ui positive right floated button">New Ad</button>
+
+   <!--   <div [hidden]="!submitted">
+          <p>Ad form submitted successfully</p>
+      </div>-->
+     <!-- <p id="demo"><span>second ago</span></p>-->
+
+   </form >
+
+  <!--   } else{ <p>please fill all the fields</p>}-->
+
+    <div class="container" #list  *ngFor="let ad of ads; let i = index"><p><img src=".\img\camera-icon.png"
+     width='70px' height='70px'/><span style="vertical-align: top;" >  {{ad.category}} , {{ ad.title}} , {{ ad.price}} , {{ ad.color}}
+     </span> <img class="ui positive right floated image" src=".\img\red bin.png" alt="delete" id='delete{{i}}' (click)=delete(i)/>
+      <img class="ui positive right floated image" src=".\img\pencil.png" alt="edit" id='edit{{i}}' (click)="edit(i)"/></p>
+     </div>
+     
